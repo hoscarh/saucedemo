@@ -1,7 +1,10 @@
 require 'capybara'
-require 'capybara/dsl'
-include Capybara::DSL
-Capybara.default_driver = :selenium
+require "capybara/rspec"
+
+Capybara.configure do |config|
+  config.default_max_wait_time = 10 # seconds
+  config.default_driver = :firefox
+end
 
 #session = Capybara::Session.new(:selenium)
 
@@ -106,4 +109,20 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+  config.include Capybara::DSL
 end
+
+if ENV["BROWSER"] == "chrome"
+  Capybara.register_driver :chrome do |app|
+    Capybara::Selenium::Driver.new(app, :browser => :chrome)
+  end
+  Capybara.default_driver = :chrome
+  @driver = Capybara::Selenium::Driver.new(:chrome)
+else ENV["BROWSER"] == "firefox"
+  Capybara.register_driver :firefox do |app|
+    Capybara::Selenium::Driver.new(app, :browser => :firefox)
+  end
+  Capybara.default_driver = :firefox
+  @driver = Capybara::Selenium::Driver.new(:firefox)
+end
+
