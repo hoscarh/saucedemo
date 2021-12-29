@@ -17,9 +17,6 @@ jobs:
         # remove space between { {
         key: saucedemo-{ { checksum "Gemfile.lock" }}
 
-      # Bundle install dependencies
-      - run: bundle install --path vendor/bundle
-
       # Store bundle cache
       - type: cache-save
         # remove space between { {
