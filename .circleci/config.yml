@@ -25,12 +25,8 @@ jobs:
           - vendor/bundle
 
       # Run rspec in parallel
-      - type: shell
-        command: |
-          bundle exec rspec --profile 1 \
-                            --format RspecJunitFormatter \
-                            --out /tmp/test-results/rspec.xml \
-                            --format progress
+      - run:
+          command: bundle exec rake runTest['headless_chrome']
 
       # Save artifacts
       - type: store_test_results
