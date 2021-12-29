@@ -17,6 +17,9 @@ jobs:
         # remove space between { {
         key: saucedemo-{ { checksum "Gemfile.lock" }}
 
+      # Bundle install dependencies
+      - run: bundle install --path vendor/bundle
+
       # Store bundle cache
       - type: cache-save
         # remove space between { {
@@ -25,8 +28,12 @@ jobs:
           - vendor/bundle
 
       # Run rspec in parallel
-      - run:
-          command: bundle exec rake runTest['headless_chrome']
+      - type: shell
+        command: |
+          bundle exec rspec --profile 1 \
+                            --format RspecJunitFormatter \
+                            --out /tmp/test-results/rspec.xml \
+                            --format progress
 
       # Save artifacts
       - type: store_test_results
