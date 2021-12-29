@@ -1,0 +1,13 @@
+version: 2
+jobs:
+  build:
+    docker:
+      # this is important to use proper image with browsers support
+      - image: circleci/ruby:2.7.5-node-browsers
+    steps:
+      - checkout
+      # Bundle install dependencies
+      - run: bundle install --path vendor/bundle
+      # Run rspec in headless_chrome
+      - run:
+          command: bundle exec rake runTest['headless_chrome']
