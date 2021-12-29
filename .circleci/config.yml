@@ -6,21 +6,8 @@ jobs:
       - image: circleci/ruby:2.7.5-node-browsers
     steps:
       - checkout
-      # Restore bundle cache
-      - type: cache-restore
-        # remove space between { {
-        key: saucedemo-{ { checksum "Gemfile.lock" }}
-
       # Bundle install dependencies
       - run: bundle install --path vendor/bundle
-
-      # Store bundle cache
-      - type: cache-save
-        # remove space between { {
-        key: suacedemo-{ { checksum "Gemfile.lock" }}
-        paths:
-          - vendor/bundle
-
       # Run rspec in parallel
       - run:
           command: bundle exec rake runTest['headless_chrome']
