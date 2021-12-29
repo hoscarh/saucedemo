@@ -1,0 +1,11 @@
+server: "hub-cloud.browserstack.com"
+user: "oscarcoronel_OQdv1l"
+key: "9qzSakWsQzcd2qpqGAuL"
+
+common_caps:
+  "build": "saucedemo"
+  "browserstack.debug": true
+
+browser_caps:
+  -
+    "browser": "chrome"
