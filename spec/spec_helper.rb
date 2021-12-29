@@ -4,6 +4,13 @@ require "capybara/rspec"
 browser = ENV["BROWSER"]
 
 case browser
+when 'headless_chrome'
+  Capybara.register_driver :chrome do |app|
+    Capybara::Selenium::Driver.new(app, browser: :selenium_chrome_headless)
+  end
+
+  Capybara.default_driver = :selenium_chrome_headless
+
 when 'browserstack'
   require 'yaml'
   require 'rspec'
