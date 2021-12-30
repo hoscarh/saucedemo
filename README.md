@@ -20,6 +20,3 @@ It use rake for run the tests:
 # CircleCI
 Itis configured for run on CircleCI in this project: 
 https://app.circleci.com/pipelines/github/hoscarh/saucedemo
-
-
-
