@@ -10,4 +10,4 @@ jobs:
       - run: bundle install --path vendor/bundle
       # Run rspec in headless_chrome
       - run:
-          command: bundle exec rake runTest
+          command: bundle exec rake runTest['headless_chrome']
