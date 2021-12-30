@@ -26,13 +26,6 @@ when "browserstack"
   Capybara.register_driver :browserstack do |app|
     @caps = CONFIG['common_caps'].merge(CONFIG['browser_caps'][TASK_ID])
 
-    # Code to start browserstack local before start of test
-    if @caps['browserstack.local'] && @caps['browserstack.local'].to_s == 'true';
-      @bs_local = BrowserStack::Local.new
-      bs_local_args = {"key" => "#{CONFIG['key']}"}
-      @bs_local.start(bs_local_args)
-    end
-
     Capybara::Selenium::Driver.new(app,
       :browser => :remote,
       :url => "https://#{CONFIG['user']}:#{CONFIG['key']}@#{CONFIG['server']}/wd/hub",
@@ -42,29 +35,17 @@ when "browserstack"
 
   Capybara.default_driver = :browserstack
 
-  # Code to stop browserstack local after end of test
-  at_exit do
-    @bs_local.stop unless @bs_local.nil?
-  end
-
 else
-  Capybara.configure do |config|
-    config.default_max_wait_time = 10 # seconds
-    config.default_driver = :firefox
-  end
-
   if browser == "chrome"
     Capybara.register_driver :chrome do |app|
       Capybara::Selenium::Driver.new(app, :browser => :chrome)
     end
     Capybara.default_driver = :chrome
-    @driver = Capybara::Selenium::Driver.new(:chrome)
   else browser == "firefox"
     Capybara.register_driver :firefox do |app|
       Capybara::Selenium::Driver.new(app, :browser => :firefox)
     end
     Capybara.default_driver = :firefox
-    @driver = Capybara::Selenium::Driver.new(:firefox)
   end
 end
 

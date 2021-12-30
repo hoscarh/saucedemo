@@ -41,10 +41,22 @@ describe "Testing on Suacedemo page" do
         expect(page.title).to be == "Error 404 | Sauce Labs"
       end
 
+      it "Login with a Performance glitch user" do
+        login_page = Pages::Login.new()
+        login_page.fill_enter("performance_glitch_user", "secret_sauce")
+
+        expect(page).to have_css "span.title", text: "Products", visible: false
+
+        header_section = Pages::Header.new()
+        header_section.logout
+
+        expect(page.title).to be == "Swag Labs"
+      end
+
       it "Login without username" do
         login_page = Pages::Login.new()
         login_page.fill_enter("", "")
-    
+
         expect(page).to have_css "div.error-message-container", text: "Epic sadface: Username is required"
       end
 
